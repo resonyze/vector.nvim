@@ -1,0 +1,71 @@
+local lush = require("lush")
+local hsl = lush.hsl
+local syntax = require("lush_theme.syntax")
+local editor = require("lush_theme.editor")
+
+return lush(function(injected_functions)
+  local sym = injected_functions.sym
+  return {
+    sym"@comment" { syntax.Comment },
+    sym"@punctuation" { syntax.Punctuation },
+    sym"@include" { syntax.PreProc },
+    sym"@punctuation.special" { syntax.Special },
+    sym"@text.diff.add" { syntax.DiffAdd },
+    sym"@text.diff.delete" { syntax.DiffDelete },
+    sym"@attribute.diff" { fg = hsl(60, 90, 65) },
+    sym"@string" { syntax.String },
+    sym"@string.escape" { sym"@string" },
+    sym"@string.special" { sym"@string" },
+    sym"@character" { sym"@string" },
+    sym"@character.special" { sym"@string" },
+    sym"@constant" { syntax.Constant },
+    sym"@constant.builtin" { sym "@constant" },
+    sym"@number" { syntax.Number },
+    sym"@boolean" { sym "@number" },
+    sym"@float" { sym "@number" },
+    sym"@function" { syntax.Function },
+    sym"@function.call" { sym "@function" },
+    sym"@method" { syntax.Function },
+    sym"@function.builtin" { fg = sym "@method".fg },
+    sym"@type" { syntax.Type },
+    sym"@type.definition" { sym "@type" },
+    sym"@type.qualifier" { fg = hsl(190, 100, 50) },
+    sym"@field" { fg = hsl(240, 100, 85) },
+    sym"@property" { sym "@field" },
+    sym"@variable" { syntax.Identifier },
+    sym"@variable.builtin" { fg = syntax.Identifier.fg.lighten(10) },
+    sym"@parameter" { fg = hsl(275, 100, 75), gui = "italic" },
+    sym"@constructor" { sym"@function" },
+    sym"@conditional" { syntax.Conditional },
+    sym"@label" { syntax.Label },
+    sym"@operator" { syntax.Operator },
+    sym"@keyword" { syntax.Keyword },
+    sym"@keyword.return" { sym"@conditional" },
+    sym"@tag.delimiter" { syntax.Delimiter },
+    sym"@keyword.function.lua" { syntax.Function },
+    sym'@text.literal' { fg = editor.Normal.fg },
+    sym"@text.reference" { fg = editor.Normal.purple },
+    sym"@text.title" { fg = editor.Normal.fg.lighten(40) },
+    sym"@text.uri" { gui = "underline", fg = hsl(190, 100, 50) },
+    sym"@text.uri.html" { gui = "underline", fg = syntax.String.fg },
+    sym"@text.underline" { sym"@text.uri" },
+    -- sym"@text.todo" { bg = palette.bg.lighten(13), gui = "italic, bold" },
+    sym"@error" { syntax.Error },
+    sym"@punctuation.bracket" { editor.Normal },
+
+    -- -- Semantic token groups
+    sym"@lsp.type.function" { sym "@function" },
+    sym"@lsp.type.variable" { syntax.Identifier },
+    -- sym"@lsp.typemod.variable.declaration" { sym"@variable" },
+    sym"@lsp.type.method" { sym "@method" },
+    sym"@lsp.type.parameter" { sym "@parameter" },
+    sym"@lsp.type.property" { sym "@property" },
+    sym"@lsp.type.class" { sym "@type" },
+    sym"@lsp.mod.control" { fg = sym "@conditional".fg },
+    -- sym"@lsp.typemod.property.instance" { sym "@function"},
+    -- sym"@lsp.mod.annotation" { fg = palette.blue },
+    -- sym"@lsp.type.keyword" { sym"@keyword" },
+    sym"@lsp.typemod.function.defaultLibrary" { sym "@function.builtin" },
+
+  }
+end)
