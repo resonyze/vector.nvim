@@ -4,7 +4,8 @@ local hsl       = lush.hsl
 return lush(function(injected_functions)
   local sym = injected_functions.sym
   return {
-    Normal { bg = hsl(220, 13, 18), fg = hsl(210, 2, 81) },                    -- Normal text
+    -- Normal { bg = hsl(220, 13, 18), fg = hsl(210, 2, 81) },                    -- Normal text
+    Normal { bg = hsl(220, 13, 16), fg = hsl(210, 2, 81) },                    -- Normal text
 
     NormalFloat { bg = hsl(220, 13, 23), fg = Normal.fg },   -- Normal text in floating windows
     NormalNC { Normal },                            -- Normal text in non-current windows
@@ -34,8 +35,6 @@ return lush(function(injected_functions)
     IncSearch { bg = Search.bg, fg = Normal.bg },
     CurSearch { Search },
 
-    -- CursorLine { bg = Normal.bg.rotate(-5).darken(-10) },
-    -- CursorLine { bg = Normal.bg.rotate(-15).lighten(10) },
     CursorLine { bg = Normal.bg.lighten(7) },
     CursorLineNr { bg = CursorLine.bg, fg = Search.bg.mix(LineNr.bg, 10), gui = "bold" },
     StatusLine { fg = Normal.fg, bg = NormalFloat.bg.lighten(5) },
@@ -66,7 +65,7 @@ return lush(function(injected_functions)
     ErrorMsg { fg = hsl(0, 100, 65) },
     WarningMsg { fg = hsl(60, 30, 70), }, -- warning messages
 
-    LspCodeLens { fg = Comment.fg.darken(10), gui = "italic, underline" },
+    LspCodeLens { fg = Comment.fg.darken(10), gui = "italic" },
     CmpGhostText  { LspCodeLens },
 
     DiagnosticError { ErrorMsg },
@@ -81,7 +80,7 @@ return lush(function(injected_functions)
     --
 
     DiagnosticUnderlineError { sp = hsl(0, 70, 60), gui = "undercurl" },
-    DiagnosticUnderlineWarn { sp = hsl(60, 105, 30), gui = "undercurl"  },
+    DiagnosticUnderlineWarn { sp = hsl(60, 20, 40), gui = "undercurl"  },
     DiagnosticUnderlineInfo { sp = hsl(210, 100, 35), gui = "undercurl" },
     DiagnosticUnderlineHint { sp = hsl(280, 100, 35), gui = "undercurl" },
 
@@ -89,16 +88,16 @@ return lush(function(injected_functions)
     Debug { fg = palette.yellow },                                  --    debugging statements
 
     Identifier { fg = hsl(219, 14, 80) },
-    Function { fg = hsl(212, 60, 75) },
+    Type { fg = hsl(182, 30, 75), gui = "italic" }, -- (preferred) int, long, char, etc.
+    Function { fg = hsl(212, 40, 75) },
 
     Constant { fg = hsl(240, 55, 75) },
-    -- String { fg = hsl(50, 70, 75), },
-    String { fg = hsl(130, 45, 75), },
+    String { fg = hsl(130, 45, 70), },
     Character { fg = String.fg },
     Attribute { Character },
-    -- Number { fg = hsl(10, 100, 80) },
     Number { fg = hsl(50, 70, 65) },
-    Boolean { fg = hsl(24, 100, 70) },
+    -- Boolean { fg = hsl(210, 100, 80) },
+    Boolean { fg = hsl(210, 100, 80) },
     -- Float         = { },
     Error { fg = hsl(360, 80, 60), gui = "italic" },
 
@@ -115,8 +114,7 @@ return lush(function(injected_functions)
     -- Macro { }, --    same as Define
     -- PreCondit { }, --  preprocessor #if, #else, #endif, etc.
 
-    -- Type { fg = hsl(212, 80, 75), gui = "italic" }, -- (preferred) int, long, char, etc.
-    Type { fg = hsl(180, 25, 75) },
+    -- Type { fg = hsl(180, 80, 75) },
     -- StorageClass { }, -- static, register, volatile, etc.
     -- Structure { }, --  struct, union, enum, etc.
     -- Typedef { }, --  A typedef
@@ -152,12 +150,12 @@ return lush(function(injected_functions)
     sym"@function.builtin" { fg = sym"@method".fg },
     sym"@type" { Type },
     sym"@type.definition" { sym "@type" },
-    sym"@type.qualifier" { Boolean },
+    sym"@type.qualifier" { Constant },
     sym"@variable" { Identifier },
     sym"@variable.builtin" { fg = Identifier.fg.lighten(10) },
     sym"@field" { fg = hsl(15, 20, 75) },
     sym"@property" { sym "@field" },
-    sym"@parameter" { fg = hsl(26, 60, 70) },
+    sym"@parameter" { fg = hsl(26, 70, 70) },
     sym"@constructor" { sym"@function" },
     sym"@conditional" { Conditional },
     sym"@label" { Label },
@@ -217,7 +215,7 @@ return lush(function(injected_functions)
     LuaLineInsertB { bg = Normal.bg.lighten(14), fg = Normal.fg.darken(0)  },
     LuaLineInsertC { bg = Normal.bg.lighten(5), fg = Normal.fg },
 
-    LuaLineUnfocused { bg = Normal.bg.lighten(10), fg = Normal.fg },
+    LuaLineUnfocused { bg = Normal.bg.lighten(5), fg = Normal.fg },
 
     -- nvim-cmp
     CmpDocumentation { fg = NormalFloat.fg, bg = NormalFloat.bg },
